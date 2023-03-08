@@ -1,0 +1,74 @@
+@startuml
+class nucleo {
+{field} zaeaze
+{method} m
+}
+
+class rasp{
+{method} 
+SendCommand()
+GetResponse()
+
+}
+
+class lidar{
+{field}
+xPosition
+yPosition
+xOtherBotPosition
+yOtherBotPosition
+{method}
+}
+
+class aspirateur_nano{
+{field}
+{method}
+}
+
+class deguisement_nano{
+{field}
+{method}
+}
+
+class fins_de_courses{
+{field}
+{method}
+}
+
+class suiveur_ligne{
+{field}
+[x1toFollow,x2toFollow, y1toFollow, y2toFollow]
+{method}
+}
+
+package chasse_gateaux{
+class chasse_avant{
+{field} f
+{method} m
+}
+class chasse_arriere{
+{field} f
+{method} m
+}
+}
+
+package stepper{
+class stepper_gauche{
+{field} f
+{method} m
+}
+class stepper_droit{
+{field} f
+{method} m
+}
+}
+
+aspirateur_nano --> nucleo
+deguisement_nano --> nucleo
+fins_de_courses --> nucleo
+suiveur_ligne --> rasp
+lidar --> rasp
+rasp - nucleo
+nucleo - stepper
+chasse_gateaux -- nucleo
+@enduml
