@@ -1,0 +1,30 @@
+@startuml comseq
+!pragma teoz true
+
+participant rasp as Foo
+participant nucleo_centrale as Foo1
+participant nucleo_module_id as Foo2
+
+[-> Foo: Souffrance
+Foo <- Foo : Command strat
+Foo ->(20) Foo1 : '\x56:id:parametre' 
+& Foo <- Foo : Timer0 started
+alt#Gold #LightBlue Réponse
+    Foo1 ->(20) Foo: '\x56:rd'
+    & Foo1 ->(20) Foo2 : '\x56:param'
+    Foo <- Foo : Timer1 started
+else #Pink TimeOut0
+    Foo1 (20)<- Foo: '\x56;id:parametre' 
+end 
+
+alt#Gold #LightBlue Réponse
+    Foo2 ->(20) Foo1 : '\x56:ok'
+    Foo1 ->(20) Foo : '\x56:id:ok'
+else #Pink TimeOut1
+    Foo1 (20)<- Foo: '\x56;id:parametre' 
+end 
+
+
+
+
+@enduml

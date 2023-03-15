@@ -1,0 +1,84 @@
+@startuml classdiag
+
+class nucleo {
+{field} 
+{method} SendCommand()
+ReadSerial()
+}
+
+class rasp{
+{method} 
+SendCommand()
+ReadSerial()
+
+}
+
+class lidar{
+{field}
+xPosition
+yPosition
+xOtherBotPosition
+yOtherBotPosition
+{method}
+SendPosition()
+}
+
+class lanceur_nucleo{
+{field} lanceurState
+{method} StartLanceur()
+}
+
+class plow_nucleo{
+{field} plowState
+{method} PlowDeployed()
+}
+
+class fins_de_courses{
+{field} interrupt
+{method} Interrupt()
+}
+
+class suiveur_ligne{
+{field}
+[x1toFollow,x2toFollow, y1toFollow, y2toFollow]
+{method}
+SendDirection()
+}
+
+package nucleo_deguisement{
+
+class deguisement_avant{
+{field} frontDegDeployed
+{method} DeployFrontDeg()
+}
+
+class deguisement_arriere{
+{field} backDegDeployed
+{method} DeployBackDeg()
+}
+
+}
+
+package nucleo_stepper{
+class stepper_gauche{
+{field} stepperGaucheState
+{method} stop()
+start()
+DoXStep()
+}
+class stepper_droit{
+{field} stepperDroitState
+{method} stop()
+start()
+DoXStep()
+}
+}
+
+lanceur_nucleo -- nucleo
+plow_nucleo -- nucleo
+fins_de_courses --> nucleo
+suiveur_ligne --> rasp
+lidar --> rasp
+rasp - nucleo
+nucleo - nucleo_stepper
+nucleo_deguisement -- nucleo
