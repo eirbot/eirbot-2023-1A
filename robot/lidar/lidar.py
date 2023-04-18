@@ -1,13 +1,15 @@
 '''Animates distances and measurment quality'''
 from rplidar import RPLidar
+from rplidar import *
 import matplotlib.pyplot as plt
 import numpy as np
 import matplotlib.animation as animation
+import asyncio
 
 PORT_NAME = 'COM8'
-DMAX = 4000
+DMAX = 13000
 IMIN = 0
-IMAX = 50
+IMAX = 200
 
 
 lidar = RPLidar(PORT_NAME)
@@ -22,12 +24,12 @@ ax.add_patch(plt.Circle((0, 0), 10, color='r', fill=True))
 
 
 def update_line(num, iterator, line):
-    
+
     #patches = []
     #patches.append(ax.add_patch(plt.Circle((0, 0), 1000, color='r', fill=False)))
     
     scan = next(iterator)
-    offsets = np.array([(np.radians(meas[1]), meas[2]) for meas in scan])
+    offsets = np.array([(np.radians(-meas[1]), meas[2]) for meas in scan])
     line.set_offsets(offsets)
     
     intens = np.array([meas[0] for meas in scan])
@@ -38,10 +40,11 @@ def update_line(num, iterator, line):
     #min_idx = np.argmin(np.linalg.norm(intens))
     ##################
     
-    fig.savefig(f'lidar.png')
+    #fig.savefig('C:/Users/arthu/Documents/GitHub/eirbot-2023-1A/robot/lidar/lidar.png')
     
     return line,#patches
 
+lidar.motor_speed = MAX_MOTOR_PWM
 iterator = lidar.iter_scans()
 ani = animation.FuncAnimation(fig, update_line, fargs=(iterator, line), interval=50)
 

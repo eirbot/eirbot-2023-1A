@@ -1,4 +1,4 @@
-import serial 
+import serial
 import time 
 import asyncio 
 import re
@@ -10,14 +10,15 @@ startTime = time.time()
 ser = serial.Serial('COM7', 9600) 
 
 CommandDictionnary = {
-                "led": [0x55,0x31,0x34,0x38,0x38,0x38,0x38,0x38,0x38,0x38,0x39,0x38,0x7e],
+                "led": [0x55,0x3a,0x2d,0x3a,0x30,0x31,0x32,0x33,0x3a,0x30,0x31,0x32,0x33,0x3a,0x7e],
                 "motor": [0x57],
+                "nothing": [0x00, 0x00, 0x00, 0x00, 0x00, 0x00],
                 "end": [0xff]
-}
+                }
 TimeOut1Dictionnary = {
                 "\x55": 2,
                 "": 0
-}
+                }
 
 commandStack = []
 trashStack = []
@@ -130,7 +131,7 @@ async def readOnly():
         await SendCommand()
         task_2 = asyncio.create_task(ReadSerial())
         task_3 = asyncio.create_task(CheckTimer())
-#await asyncio.sleep(0.5)
+        #await asyncio.sleep(0.5)
         await asyncio.wait([task_2, task_3])
 
 
