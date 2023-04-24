@@ -3,16 +3,13 @@ import numpy as np
 from matplotlib import pyplot as plt
 import time
 import asyncio
-from picamera import PiCamera
 
 # fonction asynchrone pour suivre une ligne noire sur fond blanc
+
 def followLine():
     # initialisation de la caméra
-    camera = PiCamera()
-    camera.resolution = (640, 480)
-    camera.capture('./test2.jpg')
     #cap= cv2.VideoCapture(0)
-    cap = cv2.imread('./test2.jpg')
+    cap = cv2.imread('./test.jpg')
     cap = cv2.resize(cap, (640, 480))
     gray = cv2.cvtColor(cap,cv2.COLOR_BGR2GRAY)
 
@@ -61,4 +58,5 @@ def followLine():
     lines_edges = cv2.addWeighted(cap, 0.8, line_image, 1, 0)
     cv2.imshow('image',lines_edges)
     cv2.waitKey(0)
+    
 followLine()

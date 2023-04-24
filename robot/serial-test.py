@@ -8,6 +8,7 @@ import re
 startTime = time.time()
 
 ser = serial.Serial('COM7', 9600) 
+#/dev/ttyACM0 pour linux (débrancher et rebrancher en tapant ls /dev/tty* pour trouver le bon port)
 
 CommandDictionnary = {
                 "led": [0x55,0x3a,0x2d,0x3a,0x30,0x31,0x32,0x33,0x3a,0x30,0x31,0x32,0x33,0x3a,0x7e],
@@ -30,7 +31,7 @@ async def CheckTimer():
                 if commandPacket[1]=='TimeOut0':
                         
                         timeOut0value = 1
-                        
+                
                         print(time.time()-commandPacket[2])
                         if time.time()-commandPacket[2]>timeOut0value:
                                 print("TimeOut0 for command:", commandPacket[0], "; sending command again")

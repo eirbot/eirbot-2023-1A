@@ -10,7 +10,7 @@ def main():
     
     t1 = time.time()
     #load image
-    img = cv2.imread('C:/Users/arthu/Documents/GitHub/eirbot-2023-1A/robot/lidar/lidar.png')
+    img = cv2.imread('./lidar.png')
     img = cv2.resize(img, (640, 480))
     
     cv2.imshow('image',img)

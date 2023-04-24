@@ -7,7 +7,7 @@ import matplotlib.animation as animation
 import asyncio
 
 PORT_NAME = 'COM8'
-DMAX = 13000
+DMAX = 1000
 IMIN = 0
 IMAX = 200
 
