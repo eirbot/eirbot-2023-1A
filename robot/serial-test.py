@@ -11,8 +11,9 @@ ser = serial.Serial('COM7', 9600)
 #/dev/ttyACM0 pour linux (débrancher et rebrancher en tapant ls /dev/tty* pour trouver le bon port)
 
 CommandDictionnary = {
-                "led": [0x55,0x3a,0x2d,0x3a,0x30,0x31,0x32,0x33,0x3a,0x30,0x31,0x32,0x33,0x3a,0x7e],
+                "led": [0x55,0x3a,0x56,0x3a,0x30,0x31,0x32,0x33,0x3a,],
                 "motor": [0x57],
+                "servo": [0x58],
                 "nothing": [0x00, 0x00, 0x00, 0x00, 0x00, 0x00],
                 "end": [0xff]
                 }
@@ -67,8 +68,7 @@ async def CheckResponse(response):
                                 await SendCommand(command[0]) #send command again
                         break
                 
-async def ReadSerial():
-        
+async def ReadSerial():   
         print("Reading serial---")
         response = ser.read_all()
         if response:
@@ -91,13 +91,20 @@ async def SendCommand(argCOMMAND=None):
                 command = argCOMMAND
                 print("argCOMMAND:", argCOMMAND)
         else:
+                
                 inputCommand = input("Command: ")
                 
-                try:
-                        command = CommandDictionnary[inputCommand]
+                try:    
+                        inputCommand = inputCommand.split(":") #split inputCommand into a list
+                        #inputCommand[1] = [(int(inputCommand[1][0])+48).to_bytes(1, "big"), (int(inputCommand[1][1])+48).to_bytes(1, "big"),(int(inputCommand[1][2])+48).to_bytes(1, "big")] #convert second element of inputCommand into an int
+                        #convert inputCommand[1] into a list of int
+                        inputCommand[1] = [int(inputCommand[1][0])+48, int(inputCommand[1][1])+48, int(inputCommand[1][2])+48, int(inputCommand[1][3])+48 ]
+                        print(inputCommand[1])
+                        print([0x3a,0x7e])
+                        command = CommandDictionnary[inputCommand[0]]+inputCommand[1]+[0x3a,0x7e]
                 except:
                         print("Command not found")
-                        return
+                        return 0
 
         commandStartTime=time.time()
         commandStack.append([bytearray(command).decode(), 'TimeOut0', commandStartTime])
