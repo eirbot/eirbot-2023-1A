@@ -13,7 +13,7 @@ ser = serial.Serial('COM7', 9600)
 CommandDictionnary = {
                 "led": [0x55,0x3a,0x56,0x3a,0x30,0x31,0x32,0x33,0x3a,],
                 "motor": [0x57],
-                "servo": [0x55,0x3a,0x56,0x3a,0x30,0x31,0x32,0x33,0x3a,],
+                "servo": [0x55,0x3a,0x56,0x3a],
                 "nothing": [0x00, 0x00, 0x00, 0x00, 0x00, 0x00],
                 "end": [0xff]
                 }
@@ -97,7 +97,8 @@ async def SendCommand(argCOMMAND=None):
                 try:    
                         inputCommand = inputCommand.split(":") #split inputCommand into a list
                         inputCommand[1] = [int(inputCommand[1][0])+48, int(inputCommand[1][1])+48, int(inputCommand[1][2])+48, int(inputCommand[1][3])+48 ]
-                        command = CommandDictionnary[inputCommand[0]]+inputCommand[1]+[0x3a,0x7e]
+                        inputCommand[2] = [int(inputCommand[2][0])+48, int(inputCommand[2][1])+48, int(inputCommand[2][2])+48, int(inputCommand[2][3])+48 ]
+                        command = CommandDictionnary[inputCommand[0]]+inputCommand[1]+[0x3a]+inputCommand[2]+[0x3a,0x7e]
                 except:
                         print("Command not found")
                         return 0
