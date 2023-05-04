@@ -2,9 +2,9 @@
 
 // Define stepper motor connections and steps per revolution:
 #define dirPin 2
-#define stepPin 3
-#define dirPin1 4
-#define stepPin1 5
+#define stepPin 8
+#define dirPin1 5
+#define stepPin1 4
 #define stepsPerRevolution 100
 
 void setup() {
