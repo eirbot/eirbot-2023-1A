@@ -17,7 +17,7 @@ void setup() {
     pinMode(dirPinRight, OUTPUT);
 }
 
-void ReadSerial() {
+void ReadCommandFromSerial() {
     if (Serial.available() > 0) {
         String cmd = Serial.readStringUntil('\n'); // read the incoming command
         char *tok = strtok(&cmd[0], ":"); // parse the command using strtok()
