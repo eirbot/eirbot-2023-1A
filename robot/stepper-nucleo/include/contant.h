@@ -15,7 +15,7 @@
 struct Position {
     float x;
     float y;
-    float theta;
+    float theta; // angle in radian
 };
 
 struct Distance {
