@@ -40,7 +40,7 @@ void Motor::ApplyStep(Step *step) {
     }
 
     int i = 0, j = 0;
-    while (i < abs(step->left) && j < abs(step->right)) {
+    while (i < abs(step->left) && j < abs(step->right) && digitalRead(stopAsserv) != HIGH) {
         digitalWrite(stepPinLeft, HIGH);
         digitalWrite(stepPinRight, HIGH);
         delayMicroseconds(3000);
