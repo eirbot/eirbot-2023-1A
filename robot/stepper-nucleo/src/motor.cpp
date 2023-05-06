@@ -1,30 +1,29 @@
 //
 // Created by sedelpeuch on 10/03/23.
 //
-#include <math.h>
 #include "../include/motor.h"
 #include "Arduino.h"
 
 Motor::Motor() = default;
 
-Step Motor::MeterToStep(Distance *distance) {
+void Motor::MeterToStep(Distance *distance, Step *step) {
     // take the distance and convert it to step using the constant
     float distanceMeter = distance->distance;
-    float step = distanceMeter * stepsPerRevolution / stepperResolution;
-    Step steps = {step, step};
-    return steps;
+    auto step_inc = float(distanceMeter * stepsPerRevolution / stepperResolution);
+    step->left = step_inc;
+    step->right = step_inc;
 }
 
-Step Motor::AngleToStep(float angle) {
+void Motor::AngleToStep(float angle, Step *step) {
     // take the angle and convert it to step using the constant
-    float step = (angle * stepsPerRevolution * interAxis) / (2 * PI * wheelRadius);
-    Step steps;
+    auto step_inc = float((abs(angle) * stepsPerRevolution * interAxis) / (2 * PI * wheelRadius));
     if (angle > 0) {
-        steps = {step, -step};
+        step->left = step_inc;
+        step->right = -step_inc;
     } else {
-        steps = {-step, step};
+        step->left = -step_inc;
+        step->right = step_inc;
     }
-    return steps;
 }
 
 void Motor::ApplyStep(Step *step) {

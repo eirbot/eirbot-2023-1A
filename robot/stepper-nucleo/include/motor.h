@@ -12,21 +12,21 @@ public:
      * @param distance distance in meter
      * @return step
      */
-    Step MeterToStep(Distance *distance);
+    static void MeterToStep(Distance *distance, Step *step);
 
     /**
      * Convert angle to step
      * @param angle distance in meter
      * @return step
      */
-    Step AngleToStep(float angle);
+    static void AngleToStep(float angle, Step *step);
 
     /**
      * Apply step to motor
      * @param step step
      * @param time time
      */
-    void ApplyStep(Step *step);
+    static void ApplyStep(Step *step);
 
 };
 
