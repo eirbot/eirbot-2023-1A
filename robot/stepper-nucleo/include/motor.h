@@ -1,7 +1,7 @@
 #ifndef STEPPER_NUCLEO_MOTOR_H
 #define STEPPER_NUCLEO_MOTOR_H
 
-#include "contant.h"
+#include "constant.h"
 
 class Motor {
 public:

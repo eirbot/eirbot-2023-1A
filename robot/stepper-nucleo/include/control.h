@@ -1,22 +1,20 @@
 #ifndef STEPPER_NUCLEO_CONTROL_H
 #define STEPPER_NUCLEO_CONTROL_H
 
-#include "odom.h"
 #include "motor.h"
-#include "contant.h"
+#include "constant.h"
 
 class Control {
 
 private:
-    Odometry *odom;
     Motor *motor;
 
 public:
-    Control(Odometry *odom, Motor *motor);
+    explicit Control(Motor *motor);
 
     int go_to(Position *target);
 
-    Distance position_to_distance(Position *target);
+    static Distance position_to_distance(Position *target);
 
     ~Control();
 };

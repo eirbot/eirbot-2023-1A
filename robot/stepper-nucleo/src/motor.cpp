@@ -11,17 +11,13 @@ Step Motor::MeterToStep(Distance *distance) {
     // take the distance and convert it to step using the constant
     float distanceMeter = distance->distance;
     float step = distanceMeter * stepsPerRevolution / stepperResolution;
-    Serial.println("step");
-    Serial.println(step);
     Step steps = {step, step};
     return steps;
 }
 
 Step Motor::AngleToStep(float angle) {
     // take the angle and convert it to step using the constant
-    Serial.println(angle);
     float step = (angle * stepsPerRevolution * interAxis) / (2 * PI * wheelRadius);
-    Serial.println(step);
     Step steps;
     if (angle > 0) {
         steps = {step, -step};

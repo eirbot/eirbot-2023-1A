@@ -1,5 +1,5 @@
-#ifndef STEPPER_NUCLEO_CONTANT_H
-#define STEPPER_NUCLEO_CONTANT_H
+#ifndef STEPPER_NUCLEO_CONSTANT_H
+#define STEPPER_NUCLEO_CONSTANT_H
 
 #define dirPinLeft 2
 #define dirPinRight 5
@@ -28,4 +28,4 @@ struct Step {
     float right;
 };
 
-#endif //STEPPER_NUCLEO_CONTANT_H
+#endif //STEPPER_NUCLEO_CONSTANT_H
