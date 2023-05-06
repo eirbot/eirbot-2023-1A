@@ -18,7 +18,8 @@ CommandDictionnary = {
                 "servo": [0x53,0x3a,],
                 "servo_2": [0x73,0x3a,],
                 "nothing": [0x00, 0x00, 0x00, 0x00, 0x00, 0x00],
-                "end": [0xff]
+                "pause": [0x7d, 0x3a],
+                "unpause": [0x7c, 0x3a]
                 }
 TimeOut1Dictionnary = {
                 "\x4c": 2,
@@ -27,6 +28,7 @@ TimeOut1Dictionnary = {
                 "\x6d": 2,
                 "\x53": 2,
                 "\x73": 2,
+                "\x7d": 2,
                 "\x00": 0,
                 "": 0
                 }
