@@ -7,18 +7,27 @@ import re
 
 startTime = time.time()
 
-ser = serial.Serial('COM10', 9600) 
+ser = serial.Serial('COM7', 9600) 
 #/dev/ttyACM0 pour linux (débrancher et rebrancher en tapant ls /dev/tty* pour trouver le bon port)
 
 CommandDictionnary = {
-                "led": [0x55,0x3a,0x56,0x3a,0x30,0x31,0x32,0x33,0x3a,],
-                "motor": [0x57],
-                "servo": [0x55,0x3a,],
+                "led": [0x4c, 0x3a,],
+                "led_2": [0x6c, 0x3a,],
+                "motor": [0x4d, 0x3a],
+                "motor_2": [0x6d, 0x3a],
+                "servo": [0x53,0x3a,],
+                "servo_2": [0x73,0x3a,],
                 "nothing": [0x00, 0x00, 0x00, 0x00, 0x00, 0x00],
                 "end": [0xff]
                 }
 TimeOut1Dictionnary = {
-                "\x55": 2,
+                "\x4c": 2,
+                "\x6c": 2,
+                "\x4d": 2,
+                "\x6d": 2,
+                "\x53": 2,
+                "\x73": 2,
+                "\x00": 0,
                 "": 0
                 }
 
