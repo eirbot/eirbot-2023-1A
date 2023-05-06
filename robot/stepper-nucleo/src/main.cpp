@@ -17,6 +17,7 @@ void setup() {
     pinMode(stepPinRight, OUTPUT);
     pinMode(dirPinLeft, OUTPUT);
     pinMode(dirPinRight, OUTPUT);
+    pinMode(stopAsserv, INPUT);
 }
 
 void ReadCommandFromSerial() {
@@ -59,18 +60,16 @@ void ReadCommandFromSerial() {
 
 
 void loop() {
-//    Position targetRotate = {0, 0, PI / 2};
-    Position targetTrans = {0.0, 0.2, 0};
-//    delay(2000);
-//    control.go_to(&targetRotate);
-//    delay(2000);
-    control.go_to(&targetTrans);
-    delay(2000);
-//    targetRotate = {0, 0, PI};
-//    control.go_to(&targetRotate);
-//    delay(2000);
-//    targetTrans = {0.2, 0, 0};
-//    control.go_to(&targetTrans);
-//   ReadCommandFromSerial();
-    //test();
+    Position target = {100, 0.0, 0};
+    Serial.println(digitalRead(stopAsserv));
+    control.go_to(&target);
+    delay(1000);
+//    target = {0.0, 0.5, 0};
+//    Serial.println("Go to 0, 1, 0");
+//    control.go_to(&target);
+//    delay(1000);
+//    target = {-0.5, 0., 0};
+//    control.go_to(&target);
+//    delay(1000);
+
 }

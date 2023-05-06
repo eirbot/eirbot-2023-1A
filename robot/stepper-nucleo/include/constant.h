@@ -11,7 +11,7 @@
 #define led A1
 #define wheelRadius 0.037
 #define interAxis 0.270
-#define stopAsserv 10
+#define stopAsserv 9
 
 struct Position {
     float x;

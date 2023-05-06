@@ -40,33 +40,34 @@ void Motor::ApplyStep(Step *step) {
 
     int i = 0, j = 0;
     while (i < abs(step->left) && j < abs(step->right) && digitalRead(stopAsserv) != HIGH) {
+        Serial.println("step");
         digitalWrite(stepPinLeft, HIGH);
         digitalWrite(stepPinRight, HIGH);
-        delayMicroseconds(3000);
+        delayMicroseconds(100);
         digitalWrite(stepPinLeft, LOW);
         digitalWrite(stepPinRight, LOW);
-        delayMicroseconds(3000);
+        delayMicroseconds(100);
         i++;
         j++;
     }
 
     if (i < step->left) {
-        while (i < step->left) {
-            // These four lines result in 1 step:
+        while (i < step->left && digitalRead(stopAsserv) != HIGH) {
+            Serial.println("step");
             digitalWrite(stepPinLeft, HIGH);
-            delayMicroseconds(3000);
+            delayMicroseconds(100);
             digitalWrite(stepPinLeft, LOW);
-            delayMicroseconds(3000);
+            delayMicroseconds(100);
             i++;
         }
     }
     if (j < step->right) {
-        while (j < step->right) {
-            // These four lines result in 1 step:
+        while (j < step->right && digitalRead(stopAsserv) != HIGH) {
+            Serial.println("step");
             digitalWrite(stepPinRight, HIGH);
-            delayMicroseconds(3000);
+            delayMicroseconds(100);
             digitalWrite(stepPinRight, LOW);
-            delayMicroseconds(3000);
+            delayMicroseconds(100);
             j++;
         }
     }
