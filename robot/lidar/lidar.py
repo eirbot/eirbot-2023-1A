@@ -40,7 +40,7 @@ def update_line(num, iterator, line):
     #min_idx = np.argmin(np.linalg.norm(intens))
     ##################
     
-    #fig.savefig('C:/Users/arthu/Documents/GitHub/eirbot-2023-1A/robot/lidar/lidar.png')
+    fig.savefig('./lidar.png')
     
     return line,#patches
 
