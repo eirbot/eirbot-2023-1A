@@ -15,17 +15,17 @@ int Control::go_to(Position *target) {
 
     Motor::AngleToStep(distanceAngle.angle, &step);
     if (step.left != 0 && step.right != 0) {
-        Motor::ApplyStep(&step);
+        motor->ApplyStep(&step);
         delay(500);
     }
     Motor::MeterToStep(&distanceAngle, &step);
     if (step.left != 0 && step.right != 0) {
-        Motor::ApplyStep(&step);
+        motor->ApplyStep(&step);
         delay(500);
     }
     Motor::AngleToStep(final_theta, &step);
     if (step.left != 0 && step.right != 0) {
-        Motor::ApplyStep(&step);
+        motor->ApplyStep(&step);
         delay(500);
     }
     return 0;

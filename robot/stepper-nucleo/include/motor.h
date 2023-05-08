@@ -2,8 +2,14 @@
 #define STEPPER_NUCLEO_MOTOR_H
 
 #include "constant.h"
+#include "AccelStepper.h"
+#include "MultiStepper.h"
 
 class Motor {
+private:
+    AccelStepper stepperLeft;
+    AccelStepper stepperRight;
+    MultiStepper steppers;
 public:
     Motor();
 
@@ -26,7 +32,7 @@ public:
      * @param step step
      * @param time time
      */
-    static void ApplyStep(Step *step);
+    void ApplyStep(Step *step, float RevPerSec = 0.5);
 
 };
 

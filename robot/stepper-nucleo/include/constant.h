@@ -5,10 +5,7 @@
 #define dirPinRight 5
 #define stepPinLeft 8
 #define stepPinRight 4
-#define stepsPerRevolution 100
-#define stepperResolution 0.1
-#define button A0
-#define led A1
+#define stepsPerRevolution 1600
 #define wheelRadius 0.037
 #define interAxis 0.270
 #define stopAsserv 9

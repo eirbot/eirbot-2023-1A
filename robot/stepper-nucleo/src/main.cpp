@@ -60,15 +60,13 @@ void ReadCommandFromSerial() {
 
 
 void loop() {
-    Position target = {100, 0.0, 0};
+    Position target = {0.5, 0.0, 0};
     Serial.println(digitalRead(stopAsserv));
     control.go_to(&target);
     delay(1000);
-//    target = {0.0, 0.5, 0};
-//    Serial.println("Go to 0, 1, 0");
-//    control.go_to(&target);
-//    delay(1000);
-//    target = {-0.5, 0., 0};
+    target = {-0.5, 0.0, 0};
+    control.go_to(&target);
+    delay(1000);
 //    control.go_to(&target);
 //    delay(1000);
 
