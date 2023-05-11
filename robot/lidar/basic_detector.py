@@ -5,16 +5,18 @@ from matplotlib.pyplot import imshow
 from matplotlib import pyplot as plt
 import time
 import asyncio
+import os
 
 def main():
-    lidar_img = cv2.imread('./lidar.png')
-    cv2.imshow('Lidar', lidar_img)
-    cv2.waitKey(0)
-    cv2.destroyAllWindows()    
+    absolute_path = os.path.abspath(os.path.dirname(__file__))
+    
+    while not os.path.exists(absolute_path+'/lidar.png'):
+        time.sleep(0.05)
+    lidar_img = cv2.imread(absolute_path+'/lidar.png')
     
     #get the position of the red dot
     red_dot = np.where(np.all(lidar_img == (0, 0, 255), axis=-1))
-    print(red_dot)
+    #print(red_dot)
     xlidar = red_dot[1][0]
     ylidar = red_dot[0][0]
     #cv2.circle(lidar_img, (xlidar, ylidar), 10, (0, 255, 0), 0)
@@ -42,9 +44,10 @@ def main():
             cy = int(M['m01']/M['m00'])
             dist = np.sqrt((cx - xlidar)**2 + (cy - ylidar)**2)
             angle = np.arctan2(cy - ylidar, cx - xlidar)
-            if 10<dist < 60 and 0.6<angle<1.2:
+            if 10<dist < 60 :
+                #and 0.6<angle<1.2
                 close_object_found = True 
-                print(dist)
+                #print(dist)
                 cv2.line(lidar_img, (xlidar, ylidar), (cx, cy), (0, 255, 0), 1)
                 #.putText(lidar_img, str(dist), (cx, cy), cv2.FONT_HERSHEY_SIMPLEX, 1, (0, 0, 255), 2, cv2.LINE_AA)
     
@@ -52,12 +55,15 @@ def main():
         print('Close object found')
     else:
         print('No close object found')
+    
+    #print(time.time()-begin)
 
     
     
-    cv2.imshow('Lidar', lidar_img)
-    cv2.waitKey(0)
-    cv2.destroyAllWindows()   
+    #cv2.imshow('Lidar', lidar_img)
+    #cv2.waitKey(0)
+    #cv2.destroyAllWindows()   
 
 if __name__ == '__main__':
+    main()
     main()
