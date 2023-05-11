@@ -32,7 +32,7 @@ public:
      * @param step step
      * @param time time
      */
-    void ApplyStep(Step *step, float RevPerSec = 0.5);
+    void ApplyStep(Step *step, float RevPerSec = 1);
 
 };
 

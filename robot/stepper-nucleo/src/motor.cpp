@@ -10,10 +10,10 @@ Motor::Motor() {
     this->stepperRight = AccelStepper(AccelStepper::DRIVER, stepPinRight, dirPinRight);
     this->stepperLeft.setMaxSpeed(5 * stepsPerRevolution);
     this->stepperRight.setMaxSpeed(5 * stepsPerRevolution);
-    this->stepperLeft.setAcceleration(3 * stepsPerRevolution);
-    this->stepperRight.setAcceleration(3 * stepsPerRevolution);
-    this->stepperLeft.setSpeed(500000);
-    this->stepperRight.setSpeed(500000);
+    this->stepperLeft.setAcceleration(2 * stepsPerRevolution);
+    this->stepperRight.setAcceleration(2 * stepsPerRevolution);
+    this->stepperLeft.setSpeed(50 * stepsPerRevolution);
+    this->stepperRight.setSpeed(50 * stepsPerRevolution);
 
     this->steppers = MultiStepper();
     this->steppers.addStepper(stepperLeft);
@@ -47,13 +47,14 @@ void Motor::ApplyStep(Step *step, float RevPerSec) {
     this->stepperRight.setSpeed(RevPerSec * stepsPerRevolution);
     boolean arrivedLeft = true;
     boolean arrivedRight = true;
-    while (arrivedLeft && arrivedRight) {
-        if (digitalRead(stopAsserv) == HIGH) {
-            this->stepperLeft.stop();
-            this->stepperRight.stop();
-            return;
-        }
-        arrivedLeft = this->stepperLeft.run();
-        arrivedRight = this->stepperRight.run();
-    }
+    this->steppers.runSpeedToPosition();
+//    while (arrivedLeft && arrivedRight) {
+//        if (digitalRead(stopAsserv) == HIGH) {
+//            this->stepperLeft.stop();
+//            this->stepperRight.stop();
+//            return;
+//        }
+//        arrivedRight = this->stepperRight.run();
+//        arrivedLeft = this->stepperLeft.run();
+//    }
 }
