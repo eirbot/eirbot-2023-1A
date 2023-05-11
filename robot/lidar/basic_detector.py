@@ -5,10 +5,14 @@ from matplotlib.pyplot import imshow
 from matplotlib import pyplot as plt
 import time
 import asyncio
+import os
 
 def main():
-    begin = time.time()
-    lidar_img = cv2.imread('robot/lidar/lidar.png')
+    absolute_path = os.path.abspath(os.path.dirname(__file__))
+    
+    while not os.path.exists(absolute_path+'/lidar.png'):
+        time.sleep(0.05)
+    lidar_img = cv2.imread(absolute_path+'/lidar.png')
     
     #get the position of the red dot
     red_dot = np.where(np.all(lidar_img == (0, 0, 255), axis=-1))

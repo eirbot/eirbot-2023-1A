@@ -16,6 +16,7 @@ from rplidar import RPLidar
 from rplidar import *
 import lidar
 import basic_detector
+import os
 
 PORT_NAME = '/dev/ttyUSB1'
 DMAX = 1000
@@ -73,25 +74,28 @@ class LidarScan:
             #print('time',time.time()-begin_2)
         lidar.stop_lidar(self.lidar_obj)
 
+    def main_thread(self):
+        scanner.thread.start()
+        begin = time.time()
+        offsets = None
+        intens = None
+        while time.time() - begin < 60:
+            time.sleep(0.05)
+            offsets = self.shared_offset
+            intens = self.shared_intens
+            if offsets is not None:
+                line.set_offsets(offsets)
+                line.set_array(intens)
+                absolute_path = os.path.abspath(os.path.dirname(__file__))
+                fig.savefig(absolute_path+'/lidar.png')
+                basic_detector.main()
+
+        # stop thread
+        scanner.stop = True
+
 
 if __name__ == "__main__":
-
     # create instance of Test class
     scanner = LidarScan()
+    scanner.main_thread()
     # start thread
-    scanner.thread.start()
-    begin = time.time()
-    offsets = None
-    intens = None
-    while time.time() - begin < 60:
-        time.sleep(0.05)
-        offsets = scanner.shared_offset
-        intens = scanner.shared_intens
-        if offsets is not None:
-            line.set_offsets(offsets)
-            line.set_array(intens)
-            fig.savefig('robot/lidar/lidar.png')
-            basic_detector.main()
-
-    # stop thread
-    scanner.stop = True
