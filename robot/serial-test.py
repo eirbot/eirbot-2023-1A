@@ -1,4 +1,5 @@
 import serial
+import serial.tools.list_ports
 import time 
 import asyncio 
 import re
@@ -9,7 +10,7 @@ startTime = time.time()
 
 class SerialControl:
         
-        ser = serial.Serial('COM7', 9600)
+        #ser = serial.Serial('COM7', 9600)
         #/dev/ttyACM0 pour linux (débrancher et rebrancher en tapant ls /dev/tty* pour trouver le bon port)
 
         CommandDictionnary = {
@@ -38,6 +39,24 @@ class SerialControl:
         
         commandStack = []
         trashStack = []
+        
+        #async def __init__(self):
+                #print("Initializing---")
+                #self.ser.flushInput()
+                #self.ser.flushOutput()
+                
+        def __init__(self):
+                print("Listing ports---")
+                ports = serial.tools.list_ports.comports()
+                for port in ports:
+                        if "STMicroelectronics" in port.description:
+                                print("Found STM32 port:", port.device)
+                                self.ser = serial.Serial(port.device, 9600)
+                                #break
+                        if "Silicon Labs" in port.description:
+                                print("Found Lidar port:", port.device)
+                                self.lidarport = port.device
+                                #break
                 
         async def CheckTimer(self):
                 print("Checking timer---")
@@ -189,8 +208,10 @@ class SerialControl:
 SerialClass = SerialControl()
 
 #asyncio.run(SerialClass.CreateTask(SerialClass.ReadSerial()))
-#asyncio.run(SerialClass.SendAndRead())
-strategy_command_list = ["led:1.00:1.00:1.00", "led:0.00:0.00:0.00", "motor:2.00:2.00:2.00", "motor:0.00:0.00:0.00"]
-asyncio.run(SerialClass.ApplyStrategy(strategy_command_list))
+
+asyncio.run(SerialClass.SendAndRead())
+
+#strategy_command_list = ["led:1.00:1.00:1.00", "led:0.00:0.00:0.00", "motor:2.00:2.00:2.00", "motor:0.00:0.00:0.00"]
+#asyncio.run(SerialClass.ApplyStrategy(strategy_command_list))
 #SerialClass.commandStackState()
 
