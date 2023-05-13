@@ -64,7 +64,7 @@ void loop() {
     Serial.println(digitalRead(stopAsserv));
     control.go_to(&target);
     delay(1000);
-    target = {-0.5, 0.0, 0};
+    target = {0.0, 0.0, PI};
     control.go_to(&target);
     delay(1000);
 //    control.go_to(&target);

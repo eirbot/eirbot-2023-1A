@@ -2,14 +2,13 @@
 #define STEPPER_NUCLEO_MOTOR_H
 
 #include "constant.h"
-#include "AccelStepper.h"
-#include "MultiStepper.h"
 
 class Motor {
 private:
-    AccelStepper stepperLeft;
-    AccelStepper stepperRight;
-    MultiStepper steppers;
+    int min_speed = 2000;
+    int max_speed = 300;
+    float ramp = 100;
+
 public:
     Motor();
 
@@ -32,7 +31,7 @@ public:
      * @param step step
      * @param time time
      */
-    void ApplyStep(Step *step, float RevPerSec = 1);
+    void ApplyStep(Step *step);
 
 };
 
