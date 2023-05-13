@@ -44,15 +44,16 @@ def main():
             cy = int(M['m01']/M['m00'])
             dist = np.sqrt((cx - xlidar)**2 + (cy - ylidar)**2)
             angle = np.arctan2(cy - ylidar, cx - xlidar)
-            if 10<dist < 60 :
+            if 10<dist < 60 and 0.6<angle<1.2 :
                 #and 0.6<angle<1.2
                 close_object_found = True 
                 #print(dist)
                 cv2.line(lidar_img, (xlidar, ylidar), (cx, cy), (0, 255, 0), 1)
                 #.putText(lidar_img, str(dist), (cx, cy), cv2.FONT_HERSHEY_SIMPLEX, 1, (0, 0, 255), 2, cv2.LINE_AA)
-    
+            
     if close_object_found:
-        print('Close object found')
+        #print('Close object found')
+        return "avoid"
     else:
         print('No close object found')
     
