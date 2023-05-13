@@ -210,3 +210,9 @@ asyncio.run(SerialClass.SendAndRead())
 #asyncio.run(SerialClass.ApplyStrategy(strategy_command_list))
 #SerialClass.commandStackState()
 
+#strategy relative to the corner of the table
+#strategy_commands_relative = ["motor:1.70:0.00:0.00", "motor:-1.70:0.00:0.00"]
+#line_strategy_relative = ["motor:0.67:0.00:0.00", "motor:0.00:0.00:0.00", "motor:0.00:0.50:0.00", "motor:0.00:0.00:0.00", "motor:2.00:0.00:0.00"]
+#strategy ??? to the corner of the table
+#strategy_commands_??? = ["motor:0.00:1.70:0.00", "motor:0.00:-1.70:0.00"]
+#line_strategy_??? = ["motor:0.77:0.00:0.00", "motor:0.00:0.00:0.00", "motor:0.00:0.72:0.00", "motor:0.00:0.00:0.00", "motor:2.77:0.00:0.00"]
