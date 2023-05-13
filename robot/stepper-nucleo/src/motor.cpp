@@ -48,7 +48,7 @@ void Motor::ApplyStep(Step *step) {
     int i = 0, j = 0;
     while (i < abs(step->left) && j < abs(step->right)) {
         while (digitalRead(stopAsserv) == HIGH) {
-            delay(100);
+            delayMicroseconds(100);
         }
         if (i <= this->ramp || j <= this->ramp) {
             speed = (this->max_speed - this->min_speed) / this->ramp * max(i, j) + this->min_speed;
