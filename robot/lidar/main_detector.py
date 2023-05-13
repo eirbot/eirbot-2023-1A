@@ -8,8 +8,11 @@ Covers the following topics:
 """
 import threading
 import time
+import sys
+import os
+import asyncio
 
-import serial.tools.list_ports
+from serial_test import *
 import numpy as np
 import matplotlib.pyplot as plt
 import matplotlib.animation as animation
@@ -17,9 +20,7 @@ from rplidar import RPLidar
 from rplidar import *
 import lidar
 import basic_detector
-import os
 
-#PORT_NAME = '/dev/ttyUSB1'
 DMAX = 1000
 IMIN = 0
 IMAX = 200
@@ -73,6 +74,8 @@ class LidarScan:
             self.shared_offset = self.offsets
             self.shared_intens = self.intens
             #print('time',time.time()-begin_2)
+
+            
         lidar.stop_lidar(self.lidar_obj)
 
     def main_thread(self):
@@ -80,7 +83,7 @@ class LidarScan:
         begin = time.time()
         offsets = None
         intens = None
-        while time.time() - begin < 60:
+        while time.time() - begin < 110:
             time.sleep(0.05)
             offsets = self.shared_offset
             intens = self.shared_intens
@@ -89,14 +92,24 @@ class LidarScan:
                 line.set_array(intens)
                 absolute_path = os.path.abspath(os.path.dirname(__file__))
                 fig.savefig(absolute_path+'/lidar.png')
-                basic_detector.main()
-
+                avoid = basic_detector.main()
+                
+                if avoid == "avoid":
+                    asyncio.run(SerialClass.SendCommand("pause:1.00:0.00:0.00"))
+                else :
+                    asyncio.run(SerialClass.SendCommand("unpause:0.00:1.00:0.00"))
+                    asyncio.run(SerialClass.SendCommand("motor:0.10:0.00:0.00"))
+                    
         # stop thread
         scanner.stop = True
 
 
 if __name__ == "__main__":
     # create instance of Test class
+    #SerialClass = serial_test.SerialControl()
+    SerialClass = SerialControl()
+    asyncio.run(SerialClass.SendCommand("led:1.00:1.00:1.00"))
+    
     scanner = LidarScan()
     scanner.main_thread()
     # start thread
