@@ -46,8 +46,10 @@ void Motor::ApplyStep(Step *step) {
     }
 
     int i = 0, j = 0;
-    while (i < abs(step->left) && j < abs(step->right) && digitalRead(stopAsserv) != HIGH) {
-
+    while (i < abs(step->left) && j < abs(step->right)) {
+        while (digitalRead(stopAsserv) == HIGH) {
+            delay(100);
+        }
         if (i <= this->ramp || j <= this->ramp) {
             speed = (this->max_speed - this->min_speed) / this->ramp * max(i, j) + this->min_speed;
         } else {
@@ -55,17 +57,17 @@ void Motor::ApplyStep(Step *step) {
         }
 
         if (i >= abs(step->left) - this->ramp || j >= abs(step->right) - this->ramp) {
-            int deltaT = this->ramp;
+            float deltaT = this->ramp;
             int t = max(i, j) - max(abs(step->left), abs(step->right)) + this->ramp;
             speed = (-this->max_speed + this->min_speed) / deltaT * t + this->max_speed;
         }
 
         digitalWrite(stepPinLeft, HIGH);
         digitalWrite(stepPinRight, HIGH);
-        delayMicroseconds(speed);
+        delayMicroseconds(int(speed));
         digitalWrite(stepPinLeft, LOW);
         digitalWrite(stepPinRight, LOW);
-        delayMicroseconds(speed);
+        delayMicroseconds(int(speed));
         i++;
         j++;
     }
