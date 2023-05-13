@@ -6,7 +6,6 @@ import numpy as np
 import matplotlib.animation as animation
 import asyncio
 
-PORT_NAME = '/dev/ttyUSB0'
 DMAX = 1000
 IMIN = 0
 IMAX = 200
@@ -21,6 +20,12 @@ ax.axis('off')
 ax.add_patch(plt.Circle((0, 0), 10, color='r', fill=True))"""
 
 def init_lidar():
+    print("Listing ports---")
+    ports = serial.tools.list_ports.comports()
+    for port in ports:
+            if "Silicon Labs" in port.description:
+                    print("Found Lidar port:", port.device)
+                    PORT_NAME = port.device
     lidar = RPLidar(PORT_NAME)
     lidar.connect()
     lidar.clean_input()

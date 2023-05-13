@@ -9,6 +9,7 @@ Covers the following topics:
 import threading
 import time
 
+import serial.tools.list_ports
 import numpy as np
 import matplotlib.pyplot as plt
 import matplotlib.animation as animation
@@ -18,7 +19,7 @@ import lidar
 import basic_detector
 import os
 
-PORT_NAME = '/dev/ttyUSB1'
+#PORT_NAME = '/dev/ttyUSB1'
 DMAX = 1000
 IMIN = 0
 IMAX = 200

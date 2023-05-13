@@ -39,11 +39,6 @@ class SerialControl:
         
         commandStack = []
         trashStack = []
-        
-        #async def __init__(self):
-                #print("Initializing---")
-                #self.ser.flushInput()
-                #self.ser.flushOutput()
                 
         def __init__(self):
                 print("Listing ports---")
