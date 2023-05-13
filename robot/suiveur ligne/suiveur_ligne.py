@@ -5,7 +5,7 @@ Merci Seb le bg
 """
 
 from enum import Enum
-
+import asyncio
 import cv2
 
 # (RED, GREEN, BLUE, BLACK)
@@ -38,7 +38,7 @@ class Detection:
     def __init__(self):
         self.cap = cv2.VideoCapture('robot/suiveur ligne/line.mp4')
 
-    def detect(self, color):
+    async def detect(self, color):
         """
         Main function for camera treatment, from a video stream it detects the maximum area of the color passed in parameter
         :param color: colour you want to detect
@@ -77,11 +77,17 @@ class Detection:
                     c_x = int(m["m10"] / m["m00"])
                     c_y = int(m["m01"] / m["m00"])
 
-                    '''
+                    
                     # see sexy result
-                    print(c_x, c_y)
+                    #print(c_x, c_y)
                     # show circle on the center of the detected area
                     cv2.circle(img, (c_x, c_y), 7, (255, 255, 255), -1)
+
+                    # center of camera 
+                    center_camera = self.calcul_center_camera(img.shape[0], img.shape[1])
+                    #print(img.shape[0]/2, img.shape[1]/2)
+                    #print(center_camera)
+                    cv2.circle(img, (int(center_camera[0]), int(center_camera[1]/2)), 7, (255, 255, 255), -1)
 
                     # vertical line at the middle of the image using the height and width of the image
                     middle_top_camera = (int(img.shape[1] / 2), 0)
@@ -89,7 +95,7 @@ class Detection:
                     cv2.line(img, middle_top_camera, middle_bottom_camera, (0, 255, 255), 2)
                     cv2.imshow('frame',img)
                     cv2.waitKey(10)
-                    '''
+                    
                     
             
                 width = img.shape[1]
@@ -99,6 +105,15 @@ class Detection:
                 width = 0
                 height = 0
         return c_x, c_y, width, height
+    
+    def calcul_center_camera(self, height, width):
+        """
+        Calcul the center of the camera from height and width
+        :return: center of the camera
+        """
+        x = width / 2
+        y = height / 2
+        return x, y
 
     def __del__(self):
         self.cap.release()
@@ -106,4 +121,4 @@ class Detection:
 
 if __name__ == "__main__":
     detection = Detection()
-    print(detection.detect(Color.BLACK))
+    asyncio.run(detection.detect(Color.BLACK))
