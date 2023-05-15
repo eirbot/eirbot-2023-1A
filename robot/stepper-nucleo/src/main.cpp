@@ -25,8 +25,9 @@ void ReadCommandFromSerial() {
     if (Serial.available()) {
         target[currentArg] = Serial.parseFloat();
         currentArg++;
-
+        
         if (currentArg == 4) {
+            /*
             for (int i = 0; i < (float) target[0]; i++) {
                 digitalWrite(LED_BUILTIN, HIGH);
                 delay(1000);
@@ -46,7 +47,7 @@ void ReadCommandFromSerial() {
                 digitalWrite(LED_BUILTIN, LOW);
                 delay(1000);
             }
-
+            */
             //float angle = target[2];
 
             targetPosition = {target[0], target[1], target[2]};

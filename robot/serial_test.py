@@ -20,6 +20,9 @@ class SerialControl:
                 "motor_2": [0x6d, 0x3a],
                 "servor": [0x53,0x3a,],
                 "servol": [0x54,0x3a,],
+                "canondeploy": [0x73, 0x3a,],
+                "canonretract": [0x74, 0x3a,],
+                "canonfire": [0x5a, 0x3a,],
                 "nothing": [0x00, 0x00, 0x00, 0x00, 0x00, 0x00],
                 "pause": [0x7d, 0x3a],
                 "unpause": [0x7c, 0x3a]
@@ -31,7 +34,11 @@ class SerialControl:
                         "\x4d": 2,
                         "\x6d": 2,
                         "\x53": 2,
+                        "\x54": 2,
                         "\x73": 2,
+                        "\x74": 2,
+                        "\x7c": 2,
+                        "\x5a": 2,
                         "\x7d": 2,
                         "\x00": 0,
                         "": 0
@@ -103,10 +110,10 @@ class SerialControl:
                         print("rec-",response.decode() )
                         if 'rd' in response.decode():
                                 print("command received:", response.decode())
-                                await self.SetTimeOut1(response.decode())
+                                #await self.SetTimeOut1(response.decode())
                         else:
                                 print("CheckingResponse")
-                                await self.CheckResponse(response.decode())#command pas response
+                                #await self.CheckResponse(response.decode())#command pas response
                 else:
                         print("No response")
 
@@ -192,21 +199,30 @@ class SerialControl:
                 task_1 = asyncio.create_task(self.CheckTimer())
                 await asyncio.wait([task_0, task_1])
                 
+        async def WaitStart(self):
+                read = self.ser.read_all()
+                if read:
+                        print("start received")
+                        return 1
+                        
         async def ApplyStrategy(self, strategy_command_list): 
                 for command in strategy_command_list:
                         await self.SendCommand(command)
                         task_0 = self.ReadSerial()
                         task_1 = self.CheckTimer()
                         await asyncio.wait([task_0, task_1])
+                        time.sleep(2)
+                
                         
 
 SerialClass = SerialControl()
 
-#asyncio.run(SerialClass.CreateTask(SerialClass.ReadSerial()))
 
-asyncio.run(SerialClass.SendAndRead())
+while asyncio.run(SerialClass.WaitStart())!=1:
+        print("waiting for start")
+        time.sleep(0.1)
 
-#strategy_command_list = ["led:1.00:1.00:1.00", "led:0.00:0.00:0.00", "motor:2.00:2.00:2.00", "motor:0.00:0.00:0.00"]
+#strategy_command_list = ["motor:0.00:0.00:1.57", "led:1.00:0.00:0.00", "motor:0.00:0.00:1.57", "led:1.00:0.00:0.00"]
 #asyncio.run(SerialClass.ApplyStrategy(strategy_command_list))
 #SerialClass.commandStackState()
 
