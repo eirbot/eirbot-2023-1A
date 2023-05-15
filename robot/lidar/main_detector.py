@@ -78,7 +78,11 @@ class LidarScan:
             
         lidar.stop_lidar(self.lidar_obj)
 
+    
     def main_thread(self):
+        i=0
+        strategy_command_list = ["motor:0.00:0.00:1.57", "led:1.00:0.00:0.00", "motor:0.00:0.00:1.57", "led:1.00:0.00:0.00"]
+        
         scanner.thread.start()
         begin = time.time()
         offsets = None
@@ -98,7 +102,8 @@ class LidarScan:
                     asyncio.run(SerialClass.SendCommand("pause:1.00:0.00:0.00"))
                 else :
                     asyncio.run(SerialClass.SendCommand("unpause:0.00:1.00:0.00"))
-                    asyncio.run(SerialClass.SendCommand("motor:0.10:0.00:0.00"))
+                    asyncio.run(SerialClass.ApplyStrategy([strategy_command_list[i]]))
+                    i=i+1
                     
         # stop thread
         scanner.stop = True
@@ -107,8 +112,8 @@ class LidarScan:
 if __name__ == "__main__":
     # create instance of Test class
     #SerialClass = serial_test.SerialControl()
-    SerialClass = SerialControl()
-    asyncio.run(SerialClass.SendCommand("led:1.00:1.00:1.00"))
+    #SerialClass = SerialControl()
+    #asyncio.run(SerialClass.SendCommand("led:1.00:1.00:1.00"))
     
     scanner = LidarScan()
     scanner.main_thread()
