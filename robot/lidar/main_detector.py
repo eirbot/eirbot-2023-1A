@@ -12,7 +12,6 @@ import sys
 import os
 import asyncio
 
-from serial_test import *
 import numpy as np
 import matplotlib.pyplot as plt
 import matplotlib.animation as animation
@@ -99,11 +98,11 @@ class LidarScan:
                 avoid = basic_detector.main()
                 
                 if avoid == "avoid":
-                    asyncio.run(SerialClass.SendCommand("pause:1.00:0.00:0.00"))
+                    print("")
                 else :
-                    asyncio.run(SerialClass.SendCommand("unpause:0.00:1.00:0.00"))
-                    asyncio.run(SerialClass.ApplyStrategy([strategy_command_list[i]]))
+                    print("")
                     i=i+1
+                    
                     
         # stop thread
         scanner.stop = True

@@ -5,6 +5,8 @@ import matplotlib.pyplot as plt
 import numpy as np
 import matplotlib.animation as animation
 import asyncio
+import serial.tools.list_ports
+
 
 DMAX = 1000
 IMIN = 0
@@ -71,7 +73,8 @@ def get_scan_var(iterator):
     return intens, offsets
 
 if __name__ == '__main__':
-    get_scan_var()
+    lidar, iterator = init_lidar()
+    get_scan_var(iterator)
 
     #ani = animation.FuncAnimation(fig, update_line, fargs=(iterator, line), interval=50)
     #plt.show()

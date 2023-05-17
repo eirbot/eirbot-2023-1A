@@ -217,11 +217,11 @@ class SerialControl:
 
 SerialClass = SerialControl()
 
-
+'''
 while asyncio.run(SerialClass.WaitStart())!=1:
         print("waiting for start")
         time.sleep(0.1)
-
+'''
 #strategy_command_list = ["motor:0.00:0.00:1.57", "led:1.00:0.00:0.00", "motor:0.00:0.00:1.57", "led:1.00:0.00:0.00"]
 #asyncio.run(SerialClass.ApplyStrategy(strategy_command_list))
 #SerialClass.commandStackState()
